@@ -30,7 +30,7 @@ public class UserController {
 
 	@GetMapping("/register")
 	public String loadRegisterPage(Model model) {
-    Map<Integer, String> countriesMap = userService.getCountries();
+		Map<Integer, String> countriesMap = userService.getCountries();
 		model.addAttribute("countries", countriesMap);
 
 		RegisterFormDTO registerFormDTO = new RegisterFormDTO();
@@ -58,21 +58,19 @@ public class UserController {
 	}
 
 	@PostMapping("/register")
-	public String handleRegisterationPage(RegisterFormDTO registerFormDTO, Model model){
+	public String handleRegisterationPage(RegisterFormDTO registerFormDTO, Model model) {
 		boolean status = userService.duplicateEmailCheck(registerFormDTO.getEmail());
 		if (status) {
 			model.addAttribute("emsg", "Duplicate Email Found");
-			//model.addAttribute("registerForm", registerFormDTO);
 
 		} else {
 			boolean saveUser = userService.saveUser(registerFormDTO);
 			if (saveUser) {
 				model.addAttribute("smsg", "Registeration sucess , please check your email account::::");
-				//model.addAttribute("registerForm",  registerFormDTO);
 
 			} else {
 				model.addAttribute("emsg", "Registeration Failed:::");
-				
+
 			}
 		}
 		model.addAttribute("registerForm", new RegisterFormDTO());
@@ -130,8 +128,8 @@ public class UserController {
 		boolean resetPwd = userService.resetPwd(resetPwdFormDTO);
 		if (resetPwd = true) {
 			return "redirect:dashboard";
-		} 
-			return "resetPwd";
-		
+		}
+		return "resetPwd";
+
 	}
 }
